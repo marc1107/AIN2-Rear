@@ -27,7 +27,7 @@ evenElem:	slt $t1, $t0, $s1	# solange $t0 kleiner als $s1 ist,
 			
 			# isEven aufrufen
 			move $a0, $t2 		# Übergabeparameter setzen
-			jal isEven
+			jal isEven		# Methodenaufruf
 			move $t3, $v1		# Rückgabeparameter in $t3 schreiben
 			
 			# Rücksprungadresse wieder von Stack holen
