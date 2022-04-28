@@ -10,24 +10,25 @@ B: 	.word 0, 0, 0, 0, 0, 0
 	
 	jal evenElem	# Prozedur gerade ausführen
 	
-	move $s4, $v0
+	move $s4, $v0	# Rückgabeparameter $v0 in $s4 schreiben
 	
-	j exit
+	j exit		# Programm beenden
 		
 evenElem:	slt $t1, $t0, $s1	# solange $t0 kleiner als $s1 ist,
-		beq $t1, $zero, jumpra	# ansonsten springe zurück zu Rücksprungadresse
+		beq $t1, $zero, jumpra	# ansonsten springe zurück zu Rücksprungadresse (geht das ohne die Methode jumpra?)
 	
 			lw $t2, 0($s2)		# Stelle A[i] in $t2 speichern
 			addi $s2, $s2, 4 	# Speicheradresse des nächste Worts in A setzen (1 Wort = 4)
 			addi $t0, $t0, 1	# Zählvariable $t0 um 1 erhöhen
 			
 			# Vorige Rücksprungadresse auf Stack ablegen
+			# Geht das irgendwie auch in der isEven Prozedur? Durch jal wird $ra ja schon beim Aufruf überschrieben?
 			addi $sp, $sp, -4 	# Stackpointer um ein Wort verringern
 			sw $ra, 0($sp) 		# $ra auf den Stack schreiben
 			
 			# isEven aufrufen
 			move $a0, $t2 		# Übergabeparameter setzen
-			jal isEven		# Methodenaufruf
+			jal isEven		# Prozeduraufruf
 			move $t3, $v1		# Rückgabeparameter in $t3 schreiben
 			
 			# Rücksprungadresse wieder von Stack holen
