@@ -13,7 +13,8 @@ B: 	.space 6
 	move $s4, $v0	# Rückgabeparameter $v0 in $s4 schreiben
 	
 	# Array B zur Probe auslesen
-	mul $s5, $s4, 4
+	sll $s5, $s4, 2
+	#mul $s5, $s4, 4
 	sub $s3, $s3, $s5 # $s3 wieder auf Urpsrung zurücksetzen
 	
 	lw $t0, 0($s3) # B[0]
