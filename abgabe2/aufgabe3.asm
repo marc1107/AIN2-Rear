@@ -12,11 +12,12 @@ B: 	.word 0, 0, 0, 0, 0, 0
 	
 	move $s4, $v0	# Rückgabeparameter $v0 in $s4 schreiben
 	
+	# Array B zur Probe auslesen
 	addi $s3, $s3, -12 # $s3 wieder auf Urpsrung zurücksetzen
 	
-	lw $t0, 0($s3)
-	lw $t1, 4($s3)
-	lw $t2, 8($s3)
+	lw $t0, 0($s3) # B[0]
+	lw $t1, 4($s3) # B[1]
+	lw $t2, 8($s3) # usw.
 	lw $t3, 12($s3)
 	lw $t4, 16($s3)
 	lw $t5, 20($s3)
