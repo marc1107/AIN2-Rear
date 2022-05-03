@@ -1,7 +1,7 @@
 	.data
 n: 	.word 6
 A: 	.word 3, 4, 6, 8, 11, 13
-B: 	.word 0, 0, 0, 0, 0, 0
+B: 	.space 6
 
 	.text
 	lw $s1, n	# n is $s1 speichern
