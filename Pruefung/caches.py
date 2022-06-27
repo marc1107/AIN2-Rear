@@ -1,3 +1,4 @@
+# Autor: Marc Bohner
 import math
 
 print("Adresse eingeben:")
@@ -9,46 +10,49 @@ def directMapped():
     blocksize = int(input())
     print("Blockanzahl eingeben:")
     anzahl = int(input())
-    blocknummer = math.floor(adresse/blocksize)
+    blocknummer = math.floor(adresse / blocksize)
     blockindex = blocknummer % anzahl
-    tag = math.floor(blocknummer/anzahl)
+    tag = math.floor(blocknummer / anzahl)
     offset = adresse % blocksize
 
-    print("Blocknummer:", blocknummer)
-    print("Blockindex:", blockindex)
-    print("Tag:", tag)
-    print("Offset (in Bytes):", offset)
+    print("Blocknummer: %d\t\t\tBerechnung: floor(Adresse / Blockgröße) = floor(%d / %d)" % (
+        blocknummer, adresse, blocksize))
+    print(
+        "Blockindex: %d\t\t\t\tBerechnung: Blocknummer mod Blockanzahl = %d mod %d" % (blockindex, blocknummer, anzahl))
+    print(
+        "Tag: %d\t\t\t\t\t\tBerechnung: floor(Blocknummer / Blockanzahl) = floor(%d / %d)" % (tag, blocknummer, anzahl))
+    print("Offset (in Bytes): %d\t\tBerechnung: Adresse mod Blockgröße = %d mod %d" % (offset, adresse, blocksize))
 
 
 def xWay():
-    print("Wie viel Way?")
-    way = int(input())
+    print("Wie viel Way (N)?")
+    n = int(input())
     print("Blockgröße:")
     blocksize = int(input())
     print("Gesamtspeicherplatz (in Bytes):")
     cachesize = int(input())
     anzahlbloecke = cachesize / blocksize
-    anzahlsets = anzahlbloecke / way
-    blocknummer = math.floor(adresse/blocksize)
+    anzahlsets = anzahlbloecke / n
+    blocknummer = math.floor(adresse / blocksize)
     setindex = blocknummer % anzahlsets
-    tag = math.floor(blocknummer/anzahlsets)
+    tag = math.floor(blocknummer / anzahlsets)
     offset = adresse % blocksize
 
-    print("Blocknummer:", blocknummer)
-    print("Set-Index:", setindex)
-    print("Anzahl Sets im Cache:", anzahlsets)
-    print("Anzahl Blöcke im Cache:", anzahlbloecke)
-    print("Tag:", tag)
-    print("Offset (in Bytes):", offset)
+    print("Blocknummer: %d\t\t\t\tBerechnung: floor(Adresse / Blockgröße) = floor(%d / %d)" % (
+        blocknummer, adresse, blocksize))
+    print("Anzahl Blöcke im Cache: %d\t\tBerechnung: Gesamtspeicherplatz / Blockgröße = %d / %d" % (
+        anzahlbloecke, cachesize, blocksize))
+    print("Anzahl Sets im Cache: %d\t\tBerechnung: Anzahl Blöcke / N = %d / %d" % (anzahlsets, anzahlbloecke, n))
+    print("Set-Index: %d\t\t\t\t\tBerechnung: Blocknummer mod Anzahl Sets = %d mod %d" % (
+        setindex, blocknummer, anzahlsets))
+    print("Tag: %d\t\t\t\t\t\tBerechnung: floor(Blocknummer / Anzahl Sets) = floor(%d / %d)" % (
+        tag, blocknummer, anzahlsets))
+    print("Offset (in Bytes): %d\t\t\tBerechnung: Adresse mod Blockgröße = %d mod %d" % (offset, adresse, blocksize))
 
 
-
-print("1: Direct Mapped Cache\n2: X-Way-Set-Associative Cache")
+print("1: Direct Mapped Cache\n2: N-Way-Set-Associative Cache")
 func = int(input())
 if func == 1:
     directMapped()
 elif func == 2:
     xWay()
-
-
-
