@@ -1,15 +1,11 @@
 # Autor: Marc Bohner
 import math
 
-print("Adresse eingeben:")
-adresse = int(input())
-
 
 def directMapped():
-    print("Blockgröße eingeben:")
-    blocksize = int(input())
-    print("Blockanzahl eingeben:")
-    anzahl = int(input())
+    adresse = int(input("Adresse eingeben: "))
+    blocksize = int(input("Blockgröße eingeben: "))
+    anzahl = int(input("Blockanzahl eingeben: "))
     blocknummer = math.floor(adresse / blocksize)
     blockindex = blocknummer % anzahl
     tag = math.floor(blocknummer / anzahl)
@@ -25,35 +21,55 @@ def directMapped():
 
 
 def xWay():
-    print("Wie viel Way (N)?")
-    n = int(input())
-    print("Blockgröße:")
-    blocksize = int(input())
-    print("Gesamtspeicherplatz (in Bytes):")
-    cachesize = int(input())
-    anzahlbloecke = cachesize / blocksize
-    anzahlsets = anzahlbloecke / n
+    adresse = int(input("Adresse eingeben: "))
+    x = int(input("Wie viele verschiedene Caches sollen auf einmal berechnet werden?\n"))
+
+    n = []
+    blocksize = []
+    cachesize = []
+    anzahlbloecke = []
+    anzahlsets = []
+    setindex = []
+    tag = []
+
+    blocksize = int(input("Blockgröße: "))
+
     blocknummer = math.floor(adresse / blocksize)
-    setindex = blocknummer % anzahlsets
-    tag = math.floor(blocknummer / anzahlsets)
     offset = adresse % blocksize
 
-    print("Gilt für alle Cache-Level:")
+    for i in range(0, x):
+        print("\nLevel {} Cache:".format(i + 1))
+        n.append(int(input("Wie viel Way (N)?\n")))
+        cachesize.append(int(input("Gesamtspeicherplatz (in Bytes): ")))
+        anzahlbloecke.append(cachesize[i] / blocksize)
+        anzahlsets.append(anzahlbloecke[i] / n[i])
+        setindex.append(blocknummer % anzahlsets[i])
+        tag.append(math.floor(blocknummer / anzahlsets[i]))
+
+    # n = int(input("Wie viel Way (N)?"))
+    # cachesize = int(input("Gesamtspeicherplatz (in Bytes):"))
+    # anzahlbloecke = cachesize / blocksize
+    # anzahlsets = anzahlbloecke / n
+    # setindex = blocknummer % anzahlsets
+    # tag = math.floor(blocknummer / anzahlsets)
+
+    print("\nGilt für alle Cache-Level:")
     print("Blocknummer: %d\t\t\t\tBerechnung: floor(Adresse / Blockgröße) = floor(%d / %d)" % (
         blocknummer, adresse, blocksize))
     print("Offset (in Bytes): %d\t\t\tBerechnung: Adresse mod Blockgröße = %d mod %d" % (offset, adresse, blocksize))
-    print("\nSpeziell für dieses Cache Level:")
-    print("Anzahl Blöcke im Cache: %d\t\tBerechnung: Gesamtspeicherplatz / Blockgröße = %d / %d" % (
-        anzahlbloecke, cachesize, blocksize))
-    print("Anzahl Sets im Cache: %d\t\tBerechnung: Anzahl Blöcke / N = %d / %d" % (anzahlsets, anzahlbloecke, n))
-    print("Set-Index: %d\t\t\t\t\tBerechnung: Blocknummer mod Anzahl Sets = %d mod %d" % (
-        setindex, blocknummer, anzahlsets))
-    print("Tag: %d\t\t\t\t\t\tBerechnung: floor(Blocknummer / Anzahl Sets) = floor(%d / %d)" % (
-        tag, blocknummer, anzahlsets))
+
+    for i in range(0, x):
+        print("\nSpeziell für Cache Level {}:".format(i + 1))
+        print("Anzahl Blöcke im Cache: %d\t\tBerechnung: Gesamtspeicherplatz / Blockgröße = %d / %d" % (
+            anzahlbloecke[i], cachesize[i], blocksize))
+        print("Anzahl Sets im Cache: %d\t\tBerechnung: Anzahl Blöcke / N = %d / %d" % (anzahlsets[i], anzahlbloecke[i], n[i]))
+        print("Set-Index: %d\t\t\t\t\tBerechnung: Blocknummer mod Anzahl Sets = %d mod %d" % (
+            setindex[i], blocknummer, anzahlsets[i]))
+        print("Tag: %d\t\t\t\t\t\tBerechnung: floor(Blocknummer / Anzahl Sets) = floor(%d / %d)" % (
+            tag[i], blocknummer, anzahlsets[i]))
 
 
-print("1: Direct Mapped Cache\n2: N-Way-Set-Associative Cache")
-func = int(input())
+func = int(input("1: Direct Mapped Cache\n2: N-Way-Set-Associative Cache\n"))
 if func == 1:
     directMapped()
 elif func == 2:
