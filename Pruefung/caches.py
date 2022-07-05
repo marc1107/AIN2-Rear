@@ -81,11 +81,11 @@ def dirty():
     newsetindex = blocknummer % anzahlsetsup
     newtag = math.floor(blocknummer / anzahlsetsup)
 
-    print("Blocknummer: %d\n\nBerechnung: Anzahl Sets * Tag + Set-Index = %d * %d + %d"
+    print("Blocknummer: %d\t\tBerechnung: Anzahl Sets * Tag + Set-Index = %d * %d + %d"
           % (blocknummer, anzahlsets, tag, setindex))
-    print("Set-Index: %d\n\nBerechnung: Blocknummer mod Anzahl Sets = %d mod %d"
+    print("Set-Index: %d\t\tBerechnung: Blocknummer mod Anzahl Sets = %d mod %d"
           % (newsetindex, blocknummer, anzahlsetsup))
-    print("Tag: %d\n\nBerechnung: floor(Blocknumemr / Anzahl Sets) = floor(%d / %d)"
+    print("Tag: %d\t\tBerechnung: floor(Blocknumemr / Anzahl Sets) = floor(%d / %d)"
           % (newtag, blocknummer, anzahlsetsup))
 
 
