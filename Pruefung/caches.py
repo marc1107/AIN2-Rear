@@ -5,7 +5,8 @@ import math
 def directMapped():
     adresse = int(input("Adresse eingeben: "))
     blocksize = int(input("Blockgröße eingeben: "))
-    anzahl = int(input("Blockanzahl eingeben: "))
+    cachesize = int(input("Cachegröße eingeben: "))
+    anzahl = cachesize / blocksize
     blocknummer = math.floor(adresse / blocksize)
     blockindex = blocknummer % anzahl
     tag = math.floor(blocknummer / anzahl)
@@ -14,6 +15,7 @@ def directMapped():
     print("Blocknummer: %d\t\t\tBerechnung: floor(Adresse / Blockgröße) = floor(%d / %d)" % (
         blocknummer, adresse, blocksize))
     print("Offset (in Bytes): %d\t\tBerechnung: Adresse mod Blockgröße = %d mod %d" % (offset, adresse, blocksize))
+    print("Blockanzahl: %d\t\t\t\tBerechnung: cachesize / blocksize = %d / %d" % (anzahl, cachesize, blocksize))
     print(
         "Blockindex: %d\t\t\t\tBerechnung: Blocknummer mod Blockanzahl = %d mod %d" % (blockindex, blocknummer, anzahl))
     print(
@@ -69,8 +71,29 @@ def xWay():
             tag[i], blocknummer, anzahlsets[i]))
 
 
-func = int(input("1: Direct Mapped Cache\n2: N-Way-Set-Associative Cache\n"))
+def dirty():
+    anzahlsets = int(input("Anzahl Sets (von dem Level, in dem der Dirty Block aktuell steht):\n"))
+    tag = int(input("Tag (des Dirty Blocks):\n"))
+    setindex = int(input("Set-Index (von dem Level, in dem der Dirty Block aktuell steht):\n"))
+    anzahlsetsup = int(input("Anzahl Sets (von dem Level, IN welches geschrieben werden soll, also eins höher):\n"))
+
+    blocknummer = anzahlsets * tag + setindex
+    newsetindex = blocknummer % anzahlsetsup
+    newtag = math.floor(blocknummer / anzahlsetsup)
+
+    print("Blocknummer: %d\n\nBerechnung: Anzahl Sets * Tag + Set-Index = %d * %d + %d"
+          % (blocknummer, anzahlsets, tag, setindex))
+    print("Set-Index: %d\n\nBerechnung: Blocknummer mod Anzahl Sets = %d mod %d"
+          % (newsetindex, blocknummer, anzahlsetsup))
+    print("Tag: %d\n\nBerechnung: floor(Blocknumemr / Anzahl Sets) = floor(%d / %d)"
+          % (newtag, blocknummer, anzahlsetsup))
+
+
+func = int(input("1: Direct Mapped Cache\n2: N-Way-Set-Associative Cache\n3: Set-Index und Tag um Dirty Block in höheren "
+                 "Cache zu schreiben\n"))
 if func == 1:
     directMapped()
 elif func == 2:
     xWay()
+elif func == 3:
+    dirty()
